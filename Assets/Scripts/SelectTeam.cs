@@ -21,12 +21,12 @@ public class SelectTeam : MonoBehaviour
         anim1 = team1.GetComponent<Animator>();
         anim2 = team2.GetComponent<Animator>();
         play = true;
-        isTeam1Selected = true; // Default selection
+        isTeam1Selected =true; // Default selection
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && scriptX.isLoaded && !isTeam1Selected)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && scriptX.isLoaded && isTeam1Selected)
         {
             SelectTeam1();
         }
@@ -37,7 +37,11 @@ public class SelectTeam : MonoBehaviour
         if (scriptX.wrongs == 3 && play)
         {
             play = false;
-            PlayChangeAnimation();
+            StartCoroutine(PlayChangeAnimation());
+        }
+        if (scriptX.wrongs == 4 && ! play)
+        {
+            StartCoroutine(PlayEndAnimation());
         }
     }
 
@@ -55,9 +59,10 @@ public class SelectTeam : MonoBehaviour
         isTeam1Selected = false; // Now Team 2 is selected
     }
 
-    private void PlayChangeAnimation()
+    private IEnumerator PlayChangeAnimation()
     {
         // Reverse highlight for current team, highlight the other
+        yield return new WaitForSeconds(3.0f);
         if (isTeam1Selected)
         {
             anim1.SetBool("isTeam1Selected", false);
@@ -67,6 +72,22 @@ public class SelectTeam : MonoBehaviour
         {
             anim1.SetBool("isTeam1Selected", true);
             anim2.SetBool("isTeam1Selected", false);
+        }
+    }
+
+     private IEnumerator PlayEndAnimation()
+     {
+        // Reverse highlight for current team, highlight the other
+        yield return new WaitForSeconds(3.0f);
+        if (isTeam1Selected)
+        {
+            anim2.SetBool("isTeam1Selected", false);
+           
+        }
+        else
+        {
+           
+            anim1.SetBool("isTeam1Selected", false);
         }
     }
 }
