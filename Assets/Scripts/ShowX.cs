@@ -1,6 +1,7 @@
 using Microsoft.Win32.SafeHandles;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -16,17 +17,23 @@ public class ShowX : MonoBehaviour
     [SerializeField]
     private AddPoints script;
 
+    [SerializeField]
+    private GameObject manageLoad;
+    
+    private LoadGame scriptLoad;
+
     private bool warmup;
 
     [SerializeField]
     private AudioSource audioSource;
 
-    bool coroutineAllowed,isLoaded;
+    public bool coroutineAllowed,isLoaded;
     // Start is called before the first frame update
     void Start()
     {
         wrongs = 0;
         audioSource = GetComponent<AudioSource>();
+        scriptLoad = manageLoad.GetComponent<LoadGame>();
         coroutineAllowed = false;
         warmup = true;
         isLoaded = false;
@@ -69,7 +76,7 @@ public class ShowX : MonoBehaviour
         {
             StartCoroutine(HandleOneCoroutine(oneWrong));
         }
-        if(Input.GetKeyDown(KeyCode.UpArrow) && warmup && isLoaded)
+        if((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && warmup && isLoaded)
         {
             warmup = false;
             coroutineAllowed = true;
@@ -90,7 +97,7 @@ public class ShowX : MonoBehaviour
         {
             wrongs-=1;
         }
-        if (Input.GetKeyDown("p"))
+        if (Input.GetKeyDown("p") && !scriptLoad.coroutineAllowed)
         {
             isLoaded = true;
         }

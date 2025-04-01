@@ -796,6 +796,7 @@ GameObject:
   - component: {fileID: 598493541}
   - component: {fileID: 598493543}
   - component: {fileID: 598493542}
+  - component: {fileID: 598493545}
   m_Layer: 0
   m_Name: Team 1
   m_TagString: Untagged
@@ -919,6 +920,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 598493540}
   m_CullTransparentMesh: 1
+--- !u!95 &598493545
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598493540}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ea294400c21cff8499ce276e2dfd403e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &599399434 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8950759443483991123, guid: 170d647ac917fc64d8a6ccc6f775cae9, type: 3}
@@ -1566,6 +1588,7 @@ MonoBehaviour:
   noOfGameObjects: 6
   activationDelay: 0.22
   audioSource: {fileID: 0}
+  coroutineAllowed: 0
 --- !u!82 &1228856620
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2419,8 +2442,8 @@ Transform:
   m_GameObject: {fileID: 1643843680}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -316.42523, y: 34.52229, z: -4627}
-  m_LocalScale: {x: 46.5, y: 46.5, z: 46.5}
+  m_LocalPosition: {x: 49, y: 73, z: -4627}
+  m_LocalScale: {x: 61.845, y: 90.53549, z: 46.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1768346427}
@@ -2614,8 +2637,9 @@ GameObject:
   - component: {fileID: 1746615396}
   - component: {fileID: 1746615398}
   - component: {fileID: 1746615397}
+  - component: {fileID: 1746615399}
   m_Layer: 0
-  m_Name: Team 1
+  m_Name: Team 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2737,6 +2761,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746615395}
   m_CullTransparentMesh: 1
+--- !u!95 &1746615399
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746615395}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70ab06c864c565f4785c6aef66fe5c12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1768346426
 GameObject:
   m_ObjectHideFlags: 0
@@ -2752,6 +2797,7 @@ GameObject:
   - component: {fileID: 1768346432}
   - component: {fileID: 1768346431}
   - component: {fileID: 1768346433}
+  - component: {fileID: 1768346434}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -2967,7 +3013,10 @@ MonoBehaviour:
   threeWrong: {fileID: 128997231}
   backGround: {fileID: 1643843680}
   script: {fileID: 1768346433}
+  manageLoad: {fileID: 1228856617}
   audioSource: {fileID: 0}
+  coroutineAllowed: 0
+  isLoaded: 0
 --- !u!114 &1768346433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2981,6 +3030,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 52828322}
+--- !u!114 &1768346434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768346426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d566b264f7a904ba5e90c45d10976c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scriptX: {fileID: 1768346432}
+  team1: {fileID: 598493542}
+  team2: {fileID: 1746615397}
+  anim1: {fileID: 0}
+  anim2: {fileID: 1746615399}
 --- !u!1 &1771150513
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,6 +3232,7 @@ GameObject:
   - component: {fileID: 1996568688}
   - component: {fileID: 1996568687}
   - component: {fileID: 1996568689}
+  - component: {fileID: 1996568690}
   m_Layer: 0
   m_Name: Team 1
   m_TagString: Untagged
@@ -3180,13 +3247,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996568685}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1833865594}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 2.03, y: -18}
@@ -3302,9 +3369,22 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: af44b25d3b033064d9f2c78caf1c4465, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 1
+  m_PlayAutomatically: 0
   m_AnimatePhysics: 0
   m_CullingType: 0
+--- !u!114 &1996568690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996568685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370b2de17fe156b4ea9fc901f03d23c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animation: {fileID: 1996568689}
 --- !u!1001 &2034339964
 PrefabInstance:
   m_ObjectHideFlags: 0

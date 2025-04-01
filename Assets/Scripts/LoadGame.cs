@@ -13,15 +13,19 @@ public class LoadGame : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
 
+    public bool coroutineAllowed;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        coroutineAllowed = true;
     }
     void Update()
     {
-        if (Input.GetKeyDown("l"))
+        if (Input.GetKeyDown("l") && coroutineAllowed)
         {
             StartCoroutine(ActivateObjectsWithDelay());
+            coroutineAllowed = false;
         }
     }
 
