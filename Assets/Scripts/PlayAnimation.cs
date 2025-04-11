@@ -23,6 +23,7 @@ public class PlayAnimation : MonoBehaviour
         if (Input.GetKeyDown("p") && isAllowed)
         {
             animation.Play();
+            isAllowed = false;
         }
     }
 }

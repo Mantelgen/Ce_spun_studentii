@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,16 +10,34 @@ public class LoadGame : MonoBehaviour
     [SerializeField]
     private int noOfGameObjects;
     [SerializeField]
-    private float activationDelay = 0.002f;
+    private float activationDelay;
     [SerializeField]
     private AudioSource audioSource;
 
-    public bool coroutineAllowed;
+    
+
+
+    public bool coroutineAllowed,loadQuestion;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
         coroutineAllowed = true;
+        loadQuestion = false;
+        activationDelay = 0.24f;
+    }
+    public int getNoQuestion()
+    {
+        return noOfGameObjects;
+    }
+
+   public bool getLoaded()
+    {
+        return loadQuestion;
+    }
+    public List<GameObject> GetObjects()
+    {
+        return gameObjects;
     }
     void Update()
     {
@@ -26,6 +45,11 @@ public class LoadGame : MonoBehaviour
         {
             StartCoroutine(ActivateObjectsWithDelay());
             coroutineAllowed = false;
+           
+        }
+        if(Input.GetKeyDown("p") && !coroutineAllowed)
+        {
+            loadQuestion = true;
         }
     }
 

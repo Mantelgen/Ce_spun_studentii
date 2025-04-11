@@ -8,15 +8,27 @@ using UnityEngine.UI;
 public class AddPoints : MonoBehaviour
 {
 
+    
+
     [SerializeField]
     private TextMeshProUGUI score;
 
+    
+
     [SerializeField]
     public static bool allowAdd;
+
+  
+
+
+
     void Start()
     {
-       //score.text = "";
-       allowAdd = true;
+
+        
+        allowAdd = true;
+      
+
     }
 
     public void addScore(string points)

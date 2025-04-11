@@ -355,7 +355,6 @@ GameObject:
   - component: {fileID: 255846860460061550}
   - component: {fileID: -5647882006804013609}
   - component: {fileID: -1544798488922227698}
-  - component: {fileID: 1075615931245594322}
   - component: {fileID: 8857929148138932667}
   m_Layer: 0
   m_Name: Question 1
@@ -445,11 +444,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6feb171bf51de5b4ba7760f4404e6da0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  script: {fileID: 1075615931245594322}
   score: {fileID: 564796514657841971}
   answer: {fileID: 3628513170564644853}
   faceSprite: {fileID: 21300000, guid: 9eaf091a6429fd64a9d3bbf6c9785648, type: 3}
   backSprite: {fileID: 1321481526, guid: 3c4157e0322e27c4780c162df5eab5bc, type: 3}
+  coroutineAllowed: 0
+  facedUp: 0
 --- !u!65 &-5647882006804013609
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -567,19 +567,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &1075615931245594322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4638254250444778083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01dd258ab90eb784bb4884502ee23ac7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: {fileID: 0}
 --- !u!95 &8857929148138932667
 Animator:
   serializedVersion: 5

@@ -3,40 +3,51 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.UIElements;
 
 public class ShowX : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject oneWrong, twoWrong, threeWrong,backGround;
+    private GameObject oneWrong, twoWrong, threeWrong, backGround,mainGame;
 
     [SerializeField]
-    public int wrongs { get; set; }
+    public int wrongs;
 
     [SerializeField]
     private AddPoints script;
 
-    [SerializeField]
-    private GameObject manageLoad;
-    
-    private LoadGame scriptLoad;
 
+    [SerializeField]
+    private GamePointsManager manager;
+ 
+
+    [SerializeField]
     private bool warmup;
 
     [SerializeField]
     private AudioSource audioSource;
 
-    public bool coroutineAllowed,isLoaded;
+    public bool coroutineAllowed;
+
+    public bool gameBreak = false, allowed = false;
+  
+    
     // Start is called before the first frame update
     void Start()
     {
         wrongs = 0;
-        audioSource = GetComponent<AudioSource>();
-        scriptLoad = manageLoad.GetComponent<LoadGame>();
-        coroutineAllowed = false;
+        mainGame = GameObject.Find("Main Game");
+        oneWrong = mainGame.transform.Find("One Wrong").gameObject;
+        twoWrong = mainGame.transform.Find("Two_Wrong").gameObject;
+        threeWrong = mainGame.transform.Find("Three_Wrong").gameObject;
+        backGround = mainGame.transform.Find("Transparent_background").gameObject;
+        script = FindObjectOfType<AddPoints>();
         warmup = true;
-        isLoaded = false;
+        manager = FindObjectOfType<GamePointsManager>();
+        coroutineAllowed = false;
+        manager.TeamSelected += HandleTeamSelected;
     }
 
     private IEnumerator HandleOneCoroutine(GameObject go)
@@ -70,38 +81,33 @@ public class ShowX : MonoBehaviour
                 break;
         }
     }
+    public void HandleTeamSelected(int war)
+    {
+        warmup = false;
+        coroutineAllowed = true;
+        return;
+    }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && warmup && isLoaded)
-        {
-            StartCoroutine(HandleOneCoroutine(oneWrong));
-        }
-        if((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)) && warmup && isLoaded)
-        {
-            warmup = false;
-            coroutineAllowed = true;
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && coroutineAllowed && isLoaded)
-        {
-            if (wrongs < 3)
-                handleWrongs();
-            else if (wrongs == 3)
+            if (Input.GetKeyDown(KeyCode.Space) && coroutineAllowed)
             {
-                StartCoroutine(HandleOneCoroutine(oneWrong));
-                wrongs++;
-                script.noAllowAdd();
-            }
-            
-        }
-        if(Input.GetKeyDown("-") && coroutineAllowed && wrongs>0 && isLoaded)
-        {
-            wrongs-=1;
-        }
-        if (Input.GetKeyDown("p") && !scriptLoad.coroutineAllowed)
-        {
-            isLoaded = true;
-        }
-    }
+                if (wrongs < 3)
+                    handleWrongs();
+                else if (wrongs == 3)
+                {
+                    StartCoroutine(HandleOneCoroutine(oneWrong));
+                    wrongs++;
+                    script.noAllowAdd();
+                }
 
+            }
+            if (Input.GetKeyDown("-") && coroutineAllowed && wrongs > 0 && !warmup)
+            {
+                wrongs -= 1;
+            }
+
+    }
+ 
+   
     
 }
