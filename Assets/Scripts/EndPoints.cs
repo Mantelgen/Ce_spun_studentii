@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class EndPoints : MonoBehaviour
@@ -11,25 +13,70 @@ public class EndPoints : MonoBehaviour
     private WarmUp warmUp;
 
     [SerializeField]
+    private GamePointsManager mainGame;
+
+    [SerializeField]
     private int teamSelected = 0;
     [SerializeField]
-    private bool warmupEneded = false, hasExecuted, teamselected;
+    private bool warmupEneded = false, hasExecuted, teamselected, added;
 
     void Start()
     {
         warmUp = FindObjectOfType<WarmUp>();
         warmUp.OnWarmupModified += HandleEndWarmup;
+        mainGame = FindObjectOfType<GamePointsManager>();
+        mainGame.OnTeamModfied += MainGame_OnBoolsModified;
+    }
+
+    
+
+    private IEnumerator UpdateScoreWithFade(TextMeshProUGUI team, int pointsToAdd)
+    {
+        float fadeDuration = 0.5f;
+        Color originalColor = team.color;
+
+        // Fade out
+        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(1, 0, t / fadeDuration);
+            team.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        team.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
+
+        // Update text
+        int currentPoints = string.IsNullOrEmpty(team.text) ? 0 : int.Parse(team.text);
+        currentPoints += pointsToAdd;
+        team.text = currentPoints.ToString();
+
+        // Fade in
+        for (float t = 0; t < fadeDuration; t += Time.deltaTime)
+        {
+            float alpha = Mathf.Lerp(0, 1, t / fadeDuration);
+            team.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+
+        team.color = originalColor;
+    }
+    private void MainGame_OnBoolsModified(bool obj)
+    {
+        
+        if (added) return;
+        if(obj)
+            AddPoints(team1, int.Parse(score.text));
+        else
+            AddPoints(team2, int.Parse(score.text));
+     
+        added = true;
+        return;
 
     }
+
     public void AddPoints(TextMeshProUGUI team, int points)
     {
-        if (team.text == "")
-        {
-            team.SetText(points.ToString());
-        }
-        int currentPoints = int.Parse(team.text);
-        currentPoints += points;
-        team.text = currentPoints.ToString();
+        StartCoroutine(UpdateScoreWithFade(team, points));
     }
 
     public void HandleEndWarmup(bool adev)

@@ -48,6 +48,7 @@ public class WarmUp : MonoBehaviour
             ans++;
         }
     }
+
     private void handleWarmup()
     {
         if (ans == 2)

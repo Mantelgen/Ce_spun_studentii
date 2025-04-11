@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class LoadGame : MonoBehaviour
@@ -14,7 +15,10 @@ public class LoadGame : MonoBehaviour
     [SerializeField]
     private AudioSource audioSource;
 
-    
+    [SerializeField] private TextAsset questionJson;
+    private QuestionDatabase questionDB;
+
+    [SerializeField] private TextMeshProUGUI questionTextUI;
 
 
     public bool coroutineAllowed,loadQuestion;
@@ -25,6 +29,8 @@ public class LoadGame : MonoBehaviour
         coroutineAllowed = true;
         loadQuestion = false;
         activationDelay = 0.24f;
+        LoadQuestionDatabase();
+        LoadQuestion(1);
     }
     public int getNoQuestion()
     {
@@ -39,6 +45,45 @@ public class LoadGame : MonoBehaviour
     {
         return gameObjects;
     }
+    void LoadQuestionDatabase()
+    {
+        if (questionJson != null)
+        {
+            questionDB = JsonUtility.FromJson<QuestionDatabase>(questionJson.text);
+        }
+        else
+        {
+            Debug.LogError("JSON file not assigned!");
+        }
+    }
+
+    public void LoadQuestion(int questionNumber)
+    {
+        if (questionDB == null) return;
+
+        var question = questionDB.questions.Find(q => q.questionNumber == questionNumber);
+        if (question == null)
+        {
+            Debug.LogError($"Question #{questionNumber} not found!");
+            return;
+        }
+
+        // Set question text
+        questionTextUI.text = question.questionText;
+        Debug.Log(question.noQuestions.ToString());
+        noOfGameObjects = int.Parse(question.noQuestions.ToString());
+
+        // Instantiate only up to noQuestions
+        for (int i = 0; i < question.noQuestions && i < question.answers.Count; i++)
+        {
+            var display = gameObjects[i].GetComponent<AnswerDisplay>();
+            if (display != null)
+            {
+                display.SetAnswer(question.answers[i].text, question.answers[i].points);
+            }
+        }
+    }
+
     void Update()
     {
         if (Input.GetKeyDown("l") && coroutineAllowed)

@@ -23,12 +23,14 @@ public class GamePointsManager : MonoBehaviour
     private bool[] bools;
 
     [SerializeField]
-    private bool allowAdd = false, warmupEneded = false,canFlip=true,gameEneded=false;
+    private bool allowAdd = false, warmupEneded = false,canFlip=true,gameEneded=false,teamOneSelected;
 
     [SerializeField]
     int noOfGameObjects,wrongs;
     public event Action<bool[]> OnBoolsModified;
+    public event Action<bool> OnTeamModfied;
     public event Action<int> TeamSelected;
+
 
     [SerializeField]
     public TextMeshProUGUI score;
@@ -92,6 +94,8 @@ public class GamePointsManager : MonoBehaviour
                         if (showX.wrongs == 3)
                         {
                             allowAdd = false;
+                            teamOneSelected=!teamOneSelected;
+                            gameEneded = true;
                         }
                         break;
                     }
@@ -114,10 +118,18 @@ public class GamePointsManager : MonoBehaviour
             }
            
         }
-        if ((Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow) )&& warmupEneded)
+        if (Input.GetKeyDown(KeyCode.LeftArrow)&& warmupEneded)
         {
             allowAdd = true;
             canFlip = true;
+            teamOneSelected = true;
+            TeamSelected.Invoke(1);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow) && warmupEneded)
+        {
+            allowAdd = true;
+            canFlip = true;
+            teamOneSelected = false;
             TeamSelected.Invoke(1);
         }
         if (checkIfAllTrue())
@@ -125,9 +137,15 @@ public class GamePointsManager : MonoBehaviour
 
             gameEneded = true;
         }
+        if (showX.wrongs == 4)
+        {
+            gameEneded = true;
+            //teamOneSelected = !teamOneSelected;
+        }
         if (gameEneded)
         {
             Debug.Log("Game ended");
+            OnTeamModfied.Invoke(teamOneSelected);
         }
        
     }
