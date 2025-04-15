@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,14 +27,14 @@ public class FlipScript : MonoBehaviour
     
 
     [SerializeField]
-    private bool coroutineAllowed, facedUp;
+    private bool facedUp;
     void Start()
     {
        
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         spriteRenderer.sprite = backSprite;
-        coroutineAllowed = false;
+     
         facedUp = false;
         number = gameObject.name;
         number=number.Split(' ')[1];
@@ -47,7 +47,7 @@ public class FlipScript : MonoBehaviour
  
     public IEnumerator Flip()
     {
-        coroutineAllowed = false;
+        
         if (!facedUp)
         {
             if(audioSource.isActiveAndEnabled)
@@ -69,7 +69,18 @@ public class FlipScript : MonoBehaviour
             }
         } 
     }
-   
+
+    public void ResetState()
+    {
+        spriteRenderer.sprite = backSprite;
+        answer.enabled = false;
+        score.enabled = false;
+        
+        facedUp = false;
+        transform.rotation = Quaternion.Euler(-180, 0, 0);
+    }
+
+
     void Update()
     {
         

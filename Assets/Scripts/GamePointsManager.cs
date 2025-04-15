@@ -2,13 +2,24 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
+
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GamePointsManager : MonoBehaviour
 {
     [SerializeField]
     List<GameObject> gameObjects = new List<GameObject>(8);
+
+    public static int team1Score { get; private set; }
+    public static int team2Score { get; private set; }
+
+    [SerializeField]
+    private Button nextButton;
+
+    [SerializeField]
+    private TextMeshProUGUI team1ScoreText, team2ScoreText;
 
     [SerializeReference]
     private ShowX showX;
@@ -26,7 +37,7 @@ public class GamePointsManager : MonoBehaviour
     private bool allowAdd = false, warmupEneded = false,canFlip=true,gameEneded=false,teamOneSelected;
 
     [SerializeField]
-    int noOfGameObjects,wrongs;
+    int noOfGameObjects;
     public event Action<bool[]> OnBoolsModified;
     public event Action<bool> OnTeamModfied;
     public event Action<int> TeamSelected;
@@ -36,6 +47,7 @@ public class GamePointsManager : MonoBehaviour
     public TextMeshProUGUI score;
     void Start()
     {
+        DontDestroyOnLoad(gameObject);
         noOfGameObjects = GetComponent<LoadGame>().getNoQuestion();
         showX = FindObjectOfType<ShowX>();
         bools = new bool[noOfGameObjects];
@@ -45,9 +57,11 @@ public class GamePointsManager : MonoBehaviour
         }
         canFlip = true;
         loaded = FindObjectOfType<LoadGame>();
-        wrongs = 0;
+       
         warmUp = FindObjectOfType<WarmUp>();
         warmUp.OnWarmupModified += HandleEndWarmup;
+        team1ScoreText.text = team1Score.ToString();
+        team2ScoreText.text = team2Score.ToString();
     }
     private bool hasExecuted = false;
     public void HandleEndWarmup(bool adev)
@@ -59,6 +73,15 @@ public class GamePointsManager : MonoBehaviour
         Debug.Log("Selecteaza acum o echip1");
         hasExecuted = true;
 
+    }
+
+    public void ModifyTeam1(int points)
+    {
+        team1Score += points;
+    }
+    public void ModifyTeam2(int points)
+    {
+        team2Score += points;
     }
     private bool checkIfAllTrue()
     {
@@ -146,8 +169,21 @@ public class GamePointsManager : MonoBehaviour
         {
             Debug.Log("Game ended");
             OnTeamModfied.Invoke(teamOneSelected);
+            nextButton.gameObject.SetActive(true);
         }
-       
+
+    }
+    public void OnNextButtonClicked()
+    {
+        if (gameEneded)
+        {
+            StartCoroutine(EndGameAndLoadNextQuestion());
+        }
+    }
+    private IEnumerator EndGameAndLoadNextQuestion()
+    {
+        yield return new WaitForSeconds(1f); // Optional delay
+        ReloadScene();
     }
     private void flip(GameObject gameObject)
     {
@@ -183,4 +219,25 @@ public class GamePointsManager : MonoBehaviour
             score.SetText(currentScore.ToString());
         }
     }
+
+    public void ReloadScene()
+    {
+        Debug.Log("Reloading scene "+ loaded.allQuestions() + " "+ loaded.getCurrentQuestion());
+
+        if (loaded.getCurrentQuestion()==loaded.allQuestions())
+        {
+            SceneManager.LoadScene("TransitionScene");
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+            
+        
+            
+        
+    }
+
+   
+    
 }

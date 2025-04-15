@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class AnswerData
@@ -11,6 +12,7 @@ public class AnswerData
 [Serializable]
 public class QuestionData
 {
+    public int multiplication;
     public int questionNumber;
     public string questionText;
     public int noQuestions;
@@ -20,5 +22,10 @@ public class QuestionData
 [Serializable]
 public class QuestionDatabase
 {
+    
+    public int current_question;
     public List<QuestionData> questions;
 }
+
+
+

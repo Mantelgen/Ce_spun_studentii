@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Qestions.unity
     guid: e46bc554fdd488640b5b8a6477de47a8
+  - enabled: 1
+    path: Assets/Scenes/TransitionScene.unity
+    guid: 1d515d8e937b33e45a9b69952b468577
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 8065d1cbcb6693148a5741c613d50621
   m_configObjects: {}

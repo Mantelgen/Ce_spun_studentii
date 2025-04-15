@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.SceneManagement;
+
+
 using UnityEngine;
 
 public class EndPoints : MonoBehaviour
@@ -11,6 +11,8 @@ public class EndPoints : MonoBehaviour
     [SerializeField] private TextMeshProUGUI team1, team2,score;
     [SerializeField]
     private WarmUp warmUp;
+
+    
 
     [SerializeField]
     private GamePointsManager mainGame;
@@ -59,16 +61,23 @@ public class EndPoints : MonoBehaviour
         }
 
         team.color = originalColor;
+        
     }
     private void MainGame_OnBoolsModified(bool obj)
     {
         
         if (added) return;
-        if(obj)
+        if (obj)
+        { 
             AddPoints(team1, int.Parse(score.text));
+            mainGame.ModifyTeam1(int.Parse(score.text));
+        }
         else
+        {
             AddPoints(team2, int.Parse(score.text));
-     
+            mainGame.ModifyTeam2(int.Parse(score.text));
+        }
+
         added = true;
         return;
 

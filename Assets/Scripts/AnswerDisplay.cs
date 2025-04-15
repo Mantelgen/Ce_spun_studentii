@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using TMPro;
-using UnityEngine;
 
+[System.Serializable]
 public class AnswerDisplay : MonoBehaviour
 {
     [SerializeField]
@@ -23,6 +23,11 @@ public class AnswerDisplay : MonoBehaviour
     {
         if (answerText != null) answerText.text = answer;
         if (pointText != null) pointText.text = points.ToString();
+    }
+    public void ResetAnswer()
+    {
+        this.answerText.text = "";
+        this.pointText.text = "";
     }
 }
 

@@ -25,5 +25,7 @@ public class PlayAnimation : MonoBehaviour
             animation.Play();
             isAllowed = false;
         }
+
+
     }
 }
