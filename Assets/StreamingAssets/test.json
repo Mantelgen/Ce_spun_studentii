@@ -1,0 +1,39 @@
+{
+    "current_question": 2,
+    "questions": [
+      {
+        
+        "questionNumber": 1,
+        "noQuestions": 7,
+        "multiplication": 2,
+        "questionText": "Q1: Name something people do in the morning",
+        "answers": [
+          { "text": "Brush teeth", "points": 30 },
+          { "text": "Drink coffee", "points": 25 },
+          { "text": "Shower", "points": 20 },
+          { "text": "Eat breakfast", "points": 15 },
+          { "text": "Check phone", "points": 10 },
+          { "text": "Eat breakfast", "points": 15 },
+          { "text": "Eat breakfast", "points": 15 }
+          
+        ]
+      },
+      {
+        
+        "questionNumber": 2,
+        "noQuestions": 5,
+        "multiplication": 2,
+        "questionText": "Q1: Name something people do in the morning",
+        "answers": [
+          { "text": "Brush teeth", "points": 30 },
+          { "text": "Drink coffee", "points": 25 },
+          { "text": "Shower", "points": 20 },
+          { "text": "Eat breakfast", "points": 15 },
+          { "text": "Check phone", "points": 10 }
+          
+        ]
+      }
+      
+    ]
+  }
+  
