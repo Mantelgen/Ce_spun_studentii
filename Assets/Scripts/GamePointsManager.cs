@@ -169,7 +169,7 @@ public class GamePointsManager : MonoBehaviour
         {
             Debug.Log("Game ended");
             OnTeamModfied.Invoke(teamOneSelected);
-            nextButton.gameObject.SetActive(true);
+            StartCoroutine(FadeInButtonAndText(nextButton, 1f));
         }
 
     }
@@ -237,7 +237,45 @@ public class GamePointsManager : MonoBehaviour
             
         
     }
+    private IEnumerator FadeInButtonAndText(Button button, float duration)
+    {
+        
+        Image buttonImage = button.GetComponent<Image>();
+        if (buttonImage == null) yield break; // Ensure the button has an Image component
 
-   
-    
+        // Access the TextMeshProUGUI component (assuming it's a child of the button)
+        TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+        if (buttonText == null) yield break; // Ensure the button has a TextMeshProUGUI component
+
+        float elapsedTime = 0f;
+
+        // Store the original colors
+        Color originalButtonColor = buttonImage.color;
+        Color originalTextColor = buttonText.color;
+
+        // Set initial alpha to 0 (fully transparent)
+        buttonImage.color = new Color(originalButtonColor.r, originalButtonColor.g, originalButtonColor.b, 0f);
+        buttonText.color = new Color(originalTextColor.r, originalTextColor.g, originalTextColor.b, 0f);
+
+        button.gameObject.SetActive(true); // Ensure the button is active
+
+        // Gradually increase alpha over the duration
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float alpha = Mathf.Clamp01(elapsedTime / duration); // Gradually increase alpha
+
+            // Update the alpha for both the button and the text
+            buttonImage.color = new Color(originalButtonColor.r, originalButtonColor.g, originalButtonColor.b, alpha);
+            buttonText.color = new Color(originalTextColor.r, originalTextColor.g, originalTextColor.b, alpha);
+
+            yield return null;
+        }
+
+        // Ensure both are fully visible at the end
+        buttonImage.color = new Color(originalButtonColor.r, originalButtonColor.g, originalButtonColor.b, 1f);
+        buttonText.color = new Color(originalTextColor.r, originalTextColor.g, originalTextColor.b, 1f);
+    }
+
+
 }
