@@ -1,6 +1,6 @@
 # Ce spun studentii 🎓🎮
 
-![Project Logo](Assets\Assets\Images\Logo.png)
+![Project Logo](./Assets/Assets/Images/Logo.png)
 
 ## Overview
 
